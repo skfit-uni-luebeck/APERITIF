@@ -2,7 +2,7 @@
 
 APERITIF is a fully automatically pipeline transforming information (diagnoses, medication, procedures, laboratory results, patient gender and age) from free-text eligibility criteria of a single study into a CQL query. The query is sent to an instance of the server Blaze to identify the number of eligible patients in the data base of Blaze. 
 
-<img src="/uploads/01ab1cfcb5a4af6d1a2e93958fa17258/overview.jpg" width="50%"></img>
+![overview](https://user-images.githubusercontent.com/29397290/110097300-250fda00-7d9f-11eb-8f80-085b1faa28e7.jpg)
 
 After pre-processing of the free-text eligibility criteria by using different natural language processing methods, entity recognition is performed to identify medical concepts such as diagnoses, medications, procedures, or laboratory results. For entity recognition, we used Metamap Lite which is based on UMLS. SNOMED CT and LOINC codes for medical concepts are requested at an instance of the Ontoserver. All extracted data were mapped on relevant data fields of the core data set of the Medical Informatics Initiative (MII) and were transformed into a CQL query which is sent to an instance of the server Blaze. 
 
