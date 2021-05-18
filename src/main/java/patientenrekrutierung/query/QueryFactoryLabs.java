@@ -153,9 +153,7 @@ public class QueryFactoryLabs {
 		// initialize
 		String labExclusionQuery = "";
 		QueryFactoryLabs queryFactory = new QueryFactoryLabs();
-		
-		
-		
+				
 		// take codes of all entities and exclusion criterias
 		for(LabCriteria labCriteria: labCriterias){
 			ArrayList<LabEntity> labEntities = labCriteria.getLabEntities();
@@ -165,25 +163,35 @@ public class QueryFactoryLabs {
 				ArrayList<LabValueUnitPair> valueUnits = labEntity.getValueUnit();
 				HashSet<Subentity> snomedCodes = labEntity.getSnomedCodes();
 				HashSet<Subentity> loincCodes = labEntity.getLoincCodes();
+				int counter = 0;
 				
 				// create query for exclusion criterias
 				if(snomedCodes != null){
 					for(Subentity labCode: snomedCodes){
-						labExclusionQuery = labExclusionQuery + queryFactory.createSingleLabQuery(labCode.getSubEntityCode(), comparator, valueUnits, true, "snomed") + "\n" + "and ";
+						if(counter < 20) {
+							labExclusionQuery = labExclusionQuery + queryFactory.createSingleLabQuery(labCode.getSubEntityCode(), comparator, valueUnits, true, "snomed") + "\n" + "and ";
+							counter++;
+						}else {
+							break;
+						}
+						
 					}
 				}
 				
 				if(loincCodes != null){
 					for(Subentity labCode: loincCodes){
-						labExclusionQuery = labExclusionQuery + queryFactory.createSingleLabQuery(labCode.getSubEntityCode(), comparator, valueUnits, true, "loinc") + "\n" + "and ";						
+						if(counter < 20) {
+							labExclusionQuery = labExclusionQuery + queryFactory.createSingleLabQuery(labCode.getSubEntityCode(), comparator, valueUnits, true, "loinc") + "\n" + "and ";	
+							counter++;
+						}else {
+							break;
+						}
+									
 					}
 				}
-				
-				
-				labExclusionQuery = labExclusionQuery.substring(0,labExclusionQuery.length()-4);
 			}
-			
 		}
+		labExclusionQuery = labExclusionQuery.substring(0,labExclusionQuery.length()-4);
 		return labExclusionQuery;
 	}
 	

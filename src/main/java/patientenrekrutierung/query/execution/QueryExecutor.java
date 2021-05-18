@@ -1,6 +1,8 @@
 package patientenrekrutierung.query.execution;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -119,8 +121,14 @@ public class QueryExecutor {
 			IGenericClient client = ctx.newRestfulGenericClient(serverURL);
 			IIdType idElement = queryOutcome.getResource().getIdElement();
 			try {
+				// get current date 
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDateTime now = LocalDateTime.now();
+				String today = dtf.format(now);
+		
+				// get measure report
 				MeasureReport measureReport = client.fetchResourceFromUrl(MeasureReport.class, serverURL + "/Measure/"
-						+ idElement.getIdPart() + "/$evaluate-measure?periodStart=2020-01-01&periodEnd=2021-01-01");
+						+ idElement.getIdPart() + "/$evaluate-measure?periodStart=2020-01-01&periodEnd=" + today);
 				return measureReport;
 			} catch (BaseServerResponseException e) {
 				e.printStackTrace();
